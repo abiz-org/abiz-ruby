@@ -1,0 +1,26 @@
+ABIZ reference libraries
+Copyright 2026 To.Co Technologies Limited and the ABIZ contributors.
+
+Licensed under the Apache License, Version 2.0 (LICENSE), except as noted below.
+
+Third-party material
+--------------------
+
+test-vectors/data/iso3166.json, and the copy of it each library bundles
+
+  Country codes (ISO 3166-1 alpha-2) and selected subdivision codes
+  (ISO 3166-2), extracted from the Debian iso-codes data
+  (https://salsa.debian.org/iso-codes-team/iso-codes) as redistributed by
+  pycountry 26.2.16 (https://pypi.org/project/pycountry/26.2.16/), copied
+  unchanged from abiz-org/abiz-agentic-business-record.
+
+  iso-codes and pycountry are distributed under the GNU Lesser General
+  Public License, version 2.1
+  (https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
+
+  This material is not covered by the Apache License 2.0.
+
+test-vectors/jcs.json (the first six cases)
+
+  RFC 8785 test data from cyberphone/json-canonicalization
+  (https://github.com/cyberphone/json-canonicalization), Apache License 2.0.

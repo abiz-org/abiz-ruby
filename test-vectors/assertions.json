@@ -1,0 +1,419 @@
+{
+  "format": 1,
+  "description": "The _abiz TXT value (SPEC §3.1–§3.3). is_assertion: the first tag is exactly v=abiz1, so the value counts towards the one-record rule. ok/code: parseAssertion. h is the canonical record host (host lower case, trailing dot dropped, path kept).",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "cases": [
+    {
+      "name": "minimal",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "with business key",
+      "value": "v=abiz1;k=gb-09876543;h=fernhilljoinery.uk.to.co;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "fernhilljoinery.uk.to.co",
+      "k": "gb-09876543",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "spaces around separators",
+      "value": " v = abiz1 ; k = gb-09876543 ; h = fernhilljoinery.uk.to.co ; p = VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc= ",
+      "is_assertion": true,
+      "ok": true,
+      "h": "fernhilljoinery.uk.to.co",
+      "k": "gb-09876543",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "tabs around separators",
+      "value": "v=abiz1;\th=record.example.org\t;\tp=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "one trailing semicolon",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=;",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "two trailing semicolons",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=;;",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "empty tag",
+      "value": "v=abiz1;;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "upper-case version",
+      "value": "V=ABIZ1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": false,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "version suffix",
+      "value": "v=abiz1x;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": false,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "version not first",
+      "value": "h=record.example.org;v=abiz1;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": false,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "version 2",
+      "value": "v=abiz2;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": false,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with path",
+      "value": "v=abiz1;h=record.example.org/acme;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org/acme",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "h with upper case host",
+      "value": "v=abiz1;h=Record.Example.ORG/Acme;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org/Acme",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "h with trailing dot",
+      "value": "v=abiz1;h=record.example.org.;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "h with scheme",
+      "value": "v=abiz1;h=https://record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with port",
+      "value": "v=abiz1;h=record.example.org:443;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with query",
+      "value": "v=abiz1;h=record.example.org?x=1;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with fragment",
+      "value": "v=abiz1;h=record.example.org#x;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with user",
+      "value": "v=abiz1;h=user@record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h with dot segment",
+      "value": "v=abiz1;h=record.example.org/a/../b;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h single label",
+      "value": "v=abiz1;h=localhost;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h IPv4 literal",
+      "value": "v=abiz1;h=192.0.2.1;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "h .local",
+      "value": "v=abiz1;h=printer.local;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "unsafe_host"
+    },
+    {
+      "name": "h .internal",
+      "value": "v=abiz1;h=records.corp.internal;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "unsafe_host"
+    },
+    {
+      "name": "h .onion",
+      "value": "v=abiz1;h=abcdef.onion;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "unsafe_host"
+    },
+    {
+      "name": "h label starting with hyphen",
+      "value": "v=abiz1;h=-bad.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "missing h",
+      "value": "v=abiz1;k=gb-09876543;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "missing_h"
+    },
+    {
+      "name": "empty h",
+      "value": "v=abiz1;h=;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "duplicate h",
+      "value": "v=abiz1;h=a.example.org;h=b.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "duplicate_tag"
+    },
+    {
+      "name": "duplicate p",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "duplicate_tag"
+    },
+    {
+      "name": "duplicate unknown tag",
+      "value": "v=abiz1;h=record.example.org;x=1;x=2;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "unknown tag with equals in value",
+      "value": "v=abiz1;h=record.example.org;note=a=b;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "upper-case tag name is unknown",
+      "value": "v=abiz1;H=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "missing_h"
+    },
+    {
+      "name": "missing p",
+      "value": "v=abiz1;h=record.example.org",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p as hex (ABIZ 1.0 style)",
+      "value": "v=abiz1;h=record.example.org;p=5564186961a11f981c0308ffede7ba0271ec2f5c73365af841d49c202a888237",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p as base64url",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj_7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p unpadded",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p double padded",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgj==",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p not canonical base64",
+      "value": "v=abiz1;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjB=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "p too short",
+      "value": "v=abiz1;h=record.example.org;p=AAAA",
+      "is_assertion": true,
+      "ok": false,
+      "code": "invalid_key"
+    },
+    {
+      "name": "k country only",
+      "value": "v=abiz1;k=gb;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k unassigned country",
+      "value": "v=abiz1;k=zz-123;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k unsupported country",
+      "value": "v=abiz1;k=kp-123;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k US without state",
+      "value": "v=abiz1;k=us-123456;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k US with state",
+      "value": "v=abiz1;k=us-or-123456;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "k": "us-or-123456",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "k US unknown state",
+      "value": "v=abiz1;k=us-zz-123456;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k GB with subdivision",
+      "value": "v=abiz1;k=gb-eng-123456;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "k CA federal",
+      "value": "v=abiz1;k=ca-1234567;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "k": "ca-1234567",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "k CA provincial",
+      "value": "v=abiz1;k=ca-qc-1234567890;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "k": "ca-qc-1234567890",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "k upper case",
+      "value": "v=abiz1;k=GB-09876543;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": true,
+      "h": "record.example.org",
+      "k": "GB-09876543",
+      "p": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+    },
+    {
+      "name": "k number with punctuation",
+      "value": "v=abiz1;k=gb-0987.6543;h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "space inside a value",
+      "value": "v=abiz1;h=record example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "line feed",
+      "value": "v=abiz1;h=record.example.org;\np=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "no-break space",
+      "value": "v=abiz1; h=record.example.org;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    },
+    {
+      "name": "value only v",
+      "value": "v=abiz1",
+      "is_assertion": true,
+      "ok": false,
+      "code": "missing_h"
+    },
+    {
+      "name": "tag without equals",
+      "value": "v=abiz1;h;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "is_assertion": true,
+      "ok": false,
+      "code": "bad_pointer"
+    }
+  ]
+}

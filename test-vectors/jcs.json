@@ -1,0 +1,72 @@
+{
+  "format": 1,
+  "description": "RFC 8785 canonical JSON: input text and the exact expected output bytes (UTF-8, no trailing newline). The first six are cyberphone/json-canonicalization testdata.",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "cases": [
+    {
+      "name": "rfc8785 arrays",
+      "input": "[\n  56,\n  {\n    \"d\": true,\n    \"10\": null,\n    \"1\": [ ]\n  }\n]\n",
+      "output": "[56,{\"1\":[],\"10\":null,\"d\":true}]"
+    },
+    {
+      "name": "rfc8785 french",
+      "input": "{\n  \"peach\": \"This sorting order\",\n  \"péché\": \"is wrong according to French\",\n  \"pêche\": \"but canonicalization MUST\",\n  \"sin\":   \"ignore locale\"\n}\n",
+      "output": "{\"peach\":\"This sorting order\",\"péché\":\"is wrong according to French\",\"pêche\":\"but canonicalization MUST\",\"sin\":\"ignore locale\"}"
+    },
+    {
+      "name": "rfc8785 structures",
+      "input": "{\n  \"1\": {\"f\": {\"f\": \"hi\",\"F\": 5} ,\"\\n\": 56.0},\n  \"10\": { },\n  \"\": \"empty\",\n  \"a\": { },\n  \"111\": [ {\"e\": \"yes\",\"E\": \"no\" } ],\n  \"A\": { }\n}",
+      "output": "{\"\":\"empty\",\"1\":{\"\\n\":56,\"f\":{\"F\":5,\"f\":\"hi\"}},\"10\":{},\"111\":[{\"E\":\"no\",\"e\":\"yes\"}],\"A\":{},\"a\":{}}"
+    },
+    {
+      "name": "rfc8785 unicode",
+      "input": "{\n  \"Unnormalized Unicode\":\"A\\u030a\"\n}\n",
+      "output": "{\"Unnormalized Unicode\":\"Å\"}"
+    },
+    {
+      "name": "rfc8785 values",
+      "input": "{\n  \"numbers\": [333333333.33333329, 1E30, 4.50, 2e-3, 0.000000000000000000000000001],\n  \"string\": \"\\u20ac$\\u000F\\u000aA'\\u0042\\u0022\\u005c\\\\\\\"\\/\",\n  \"literals\": [null, true, false]\n}",
+      "output": "{\"literals\":[null,true,false],\"numbers\":[333333333.3333333,1e+30,4.5,0.002,1e-27],\"string\":\"€$\\u000f\\nA'B\\\"\\\\\\\\\\\"/\"}"
+    },
+    {
+      "name": "rfc8785 weird",
+      "input": "{\n  \"\\u20ac\": \"Euro Sign\",\n  \"\\r\": \"Carriage Return\",\n  \"\\u000a\": \"Newline\",\n  \"1\": \"One\",\n  \"\\u0080\": \"Control\\u007f\",\n  \"\\ud83d\\ude02\": \"Smiley\",\n  \"\\u00f6\": \"Latin Small Letter O With Diaeresis\",\n  \"\\ufb33\": \"Hebrew Letter Dalet With Dagesh\",\n  \"</script>\": \"Browser Challenge\"\n}\n",
+      "output": "{\"\\n\":\"Newline\",\"\\r\":\"Carriage Return\",\"1\":\"One\",\"</script>\":\"Browser Challenge\",\"\":\"Control\",\"ö\":\"Latin Small Letter O With Diaeresis\",\"€\":\"Euro Sign\",\"😂\":\"Smiley\",\"דּ\":\"Hebrew Letter Dalet With Dagesh\"}"
+    },
+    {
+      "name": "negative zero",
+      "input": "[-0, 0.0, -0.0]",
+      "output": "[0,0,0]"
+    },
+    {
+      "name": "exponents",
+      "input": "[1e21, 1e20, 1e-7, 1e-6, 123e-9, 5E+2, 0.000001, 100000000000000000000.0]",
+      "output": "[1e+21,100000000000000000000,1e-7,0.000001,1.23e-7,500,0.000001,100000000000000000000]"
+    },
+    {
+      "name": "doubles",
+      "input": "[0.1, 0.2, 0.30000000000000004, 1.7976931348623157e308, 5e-324, 4.35, 333333333.33333329]",
+      "output": "[0.1,0.2,0.30000000000000004,1.7976931348623157e+308,5e-324,4.35,333333333.3333333]"
+    },
+    {
+      "name": "integers up to 2^53",
+      "input": "[9007199254740991, -9007199254740991, 4503599627370496.5]",
+      "output": "[9007199254740991,-9007199254740991,4503599627370496]"
+    },
+    {
+      "name": "member order by UTF-16 code units",
+      "input": "{\"\\ud83d\\ude00\":1,\"\\ufb33\":2,\"a\":3,\"A\":4,\"\\u00e9\":5,\"\":6}",
+      "output": "{\"\":6,\"A\":4,\"a\":3,\"é\":5,\"😀\":1,\"דּ\":2}"
+    },
+    {
+      "name": "escapes",
+      "input": "[\"\\u0000\\u001f\\u007f\\b\\f\\n\\r\\t\\\"\\\\/\", \"\\u2028\\u2029\", \"é\"]",
+      "output": "[\"\\u0000\\u001f\\b\\f\\n\\r\\t\\\"\\\\/\",\"  \",\"é\"]"
+    },
+    {
+      "name": "nesting",
+      "input": "{\"b\":[{\"d\":true,\"c\":null}],\"a\":{\"z\":false,\"y\":[]}}",
+      "output": "{\"a\":{\"y\":[],\"z\":false},\"b\":[{\"c\":null,\"d\":true}]}"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Ruby ${{ matrix.ruby }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.1', '3.3']
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: abiz
+        working-directory: abiz
+        run: bundle install && bundle exec rake test && gem build abiz.gemspec
+      # jekyll-abiz needs Ruby 3.2 (its Jekyll stack does); abiz itself runs on 3.1.
+      - name: jekyll-abiz
+        if: matrix.ruby != '3.1'
+        working-directory: jekyll-abiz
+        run: bundle install && bundle exec rake test && gem build jekyll-abiz.gemspec

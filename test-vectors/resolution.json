@@ -1,0 +1,2154 @@
+{
+  "format": 1,
+  "description": "The whole algorithm with a fake DNS and a fake fetch. dns maps an owner name to its answer (absent: NXDOMAIN); TXT values are the decoded strings. http maps the exact URL fetched to its outcome (absent: 404); body null means larger than 64 KiB. expect.fetches and expect.dns_queries are what the reference resolver did, in order: an implementation MUST make no other request and SHOULD make the same ones.",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "cases": [
+    {
+      "name": "resolved from DNS",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "resolved from website input",
+      "input": {
+        "website": "https://www.harbourbikes.example.org/contact?x=1"
+      },
+      "dns": {
+        "_abiz.www.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "www.harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.www.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "other TXT records ignored",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "google-site-verification=abc",
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+            "v=spf1 -all"
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "content type with parameters",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json; charset=utf-8",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "structured +json type",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/abiz+json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "text/plain read with a warning",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "text/plain; charset=utf-8",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [
+          {
+            "code": "content_type"
+          }
+        ],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "no content type read with a warning",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": null,
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [
+          {
+            "code": "content_type"
+          }
+        ],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "HTML content type refused",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "text/html",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "not_json",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "NXDOMAIN, no well-known file",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "NODATA, no well-known file",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nodata",
+          "ttl": 60
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "only other TXT records",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=spf1 -all"
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "www name with nothing suggests the apex",
+      "input": {
+        "domain": "www.harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.www.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "www.harbourbikes.example.org",
+        "warnings": [
+          {
+            "code": "try_apex",
+            "domain": "harbourbikes.example.org"
+          }
+        ],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.www.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://www.harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "DNS timeout",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "error",
+          "reason": "timeout"
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "dns_timeout",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "DNS network failure",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "error",
+          "reason": "network"
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "unavailable",
+        "code": "dns_timeout",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "DNS SERVFAIL",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "error",
+          "reason": "servfail"
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "dns_failure",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "DNS REFUSED",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "error",
+          "reason": "refused"
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "unavailable",
+        "code": "dns_failure",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "two assertions",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+            "v=abiz1;h=records.example.org/harbour;p=kjRcW9aoFAyVDqzh4KWIP0MZLV1NmU3EwSmk+Ix3zQg="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "conflict",
+        "code": "multiple_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "two identical assertions",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "conflict",
+        "code": "multiple_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "malformed assertion does not fall back",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;h=records.example.org/harbour"
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"k\":\"us-or-123456\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        },
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "invalid_key",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;h=records.example.org/harbour",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "near miss: upper-case V",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "V=abiz1;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"k\":\"us-or-123456\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "bad_pointer",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "near miss: wrong version",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz2;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "invalid_record",
+        "code": "bad_pointer",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "hex p (ABIZ 1.0) is invalid",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;h=records.example.org/harbour;p=5564186961a11f981c0308ffede7ba0271ec2f5c73365af841d49c202a888237"
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "invalid_key",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;h=records.example.org/harbour;p=5564186961a11f981c0308ffede7ba0271ec2f5c73365af841d49c202a888237",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "h on a private name",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;h=records.corp.internal;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {},
+      "expect": {
+        "status": "invalid_record",
+        "code": "unsafe_host",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;h=records.corp.internal;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": []
+      }
+    },
+    {
+      "name": "well-known file used",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"k\":\"us-or-123456\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        },
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "well_known",
+        "well_known": "used",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json",
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file with unknown members",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=spf1 -all"
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"k\":\"us-or-123456\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"note\":\"ignored\"}"
+        },
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "well_known",
+        "well_known": "used",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json",
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file without k",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nodata",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        },
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "resolved",
+        "code": null,
+        "retryable": false,
+        "method": "well_known",
+        "well_known": "used",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": true,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json",
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file missing p",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\"}"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file with a non-string member",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"k\":5}"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known value with a space",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour \",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file not JSON",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "v=abiz1"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file served as HTML",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "text/html",
+          "body": "{\"v\":\"abiz1\",\"h\":\"records.example.org/harbour\",\"p\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\"}"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file too large",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": null
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "invalid",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file 404",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 404,
+          "content_type": "text/html",
+          "body": "Not found"
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file 503",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 503,
+          "content_type": null,
+          "body": ""
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "unavailable",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file timeout",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "timeout"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "upstream_timeout",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "unavailable",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known file network failure",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "network"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "unavailable",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "well-known redirect is not followed",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "nxdomain",
+          "ttl": 60
+        }
+      },
+      "http": {
+        "https://harbourbikes.example.org/.well-known/abiz.json": {
+          "kind": "response",
+          "status": 301,
+          "content_type": null,
+          "body": ""
+        }
+      },
+      "expect": {
+        "status": "not_found",
+        "code": "missing_txt",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "absent",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://harbourbikes.example.org/.well-known/abiz.json"
+        ]
+      }
+    },
+    {
+      "name": "record host refused by the SSRF guard",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "blocked"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "unsafe_host",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record host has no address",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "no_address"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "fetch_failed",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record host name lookup failed",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "dns_error"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record fetch timeout",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "timeout"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "upstream_timeout",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record fetch network failure",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "network"
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record 404",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 404,
+          "content_type": "text/html",
+          "body": "Not found"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "fetch_failed",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record redirect is not followed",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 302,
+          "content_type": null,
+          "body": ""
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "fetch_failed",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record 429",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 429,
+          "content_type": null,
+          "body": ""
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record 500",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 500,
+          "content_type": null,
+          "body": ""
+        }
+      },
+      "expect": {
+        "status": "unavailable",
+        "code": "origin_unavailable",
+        "retryable": true,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record too large",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": null
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "record_too_large",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record not JSON",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\"record_version\": "
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "not_json",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record repeats a member",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "not_json",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record fails the schema",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"dHJqw9HqoFeFNOwJlRaJK5PIVt0lPx2zBHx4qmuXk7VIiEInDJ42equ3tiRSrdtLsAfinh+BozALD2DCDslQDg==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "schema_invalid",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record identity_host differs",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/other\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"fIW/NnOLzOW1VHVOrW3ITLsDmwGQwLrt5NN/NKlXaXcI7U5uYHf0Xii74ObSX68UqpmQFRLiaWWSbZXI57WTAg==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "identity_host_mismatch",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "record does not declare the domain",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"other.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"LpMoCoX7+mq6m8JJ9ZoSNJvpE+H4NtK5hd+aN6ZOHm2hPnZ+HJMbzA3cnlRAeJ8TPJOsjSt0BsVMbx6N8N10Ag==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "domain_not_claimed",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "k differs from business_key",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-654321;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "business_key_mismatch",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-654321;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "public_key differs from p",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=kjRcW9aoFAyVDqzh4KWIP0MZLV1NmU3EwSmk+Ix3zQg="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "public_key_mismatch",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=kjRcW9aoFAyVDqzh4KWIP0MZLV1NmU3EwSmk+Ix3zQg=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "signature does not verify",
+      "input": {
+        "domain": "harbourbikes.example.org"
+      },
+      "dns": {
+        "_abiz.harbourbikes.example.org": {
+          "kind": "answer",
+          "values": [
+            "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc="
+          ],
+          "ttl": 300
+        }
+      },
+      "http": {
+        "https://records.example.org/harbour?format=json": {
+          "kind": "response",
+          "status": 200,
+          "content_type": "application/json",
+          "body": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"records.example.org/harbour\",\n  \"domains\": [\n    \"harbourbikes.example.org\",\n    \"www.harbourbikes.example.org\"\n  ],\n  \"public_key\": \"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\n  \"description\": \"Changed after signing.\",\n  \"website\": \"https://harbourbikes.example.org\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"rSpORIJN8d52y3JGiF4+qPA7iU9lD7xInwPwDlsxt7hsc/SGS9auQw6yxcow4+3LpEeVvm8LbzQSiBFl+iYPCw==\"\n}"
+        }
+      },
+      "expect": {
+        "status": "invalid_record",
+        "code": "signature_invalid",
+        "retryable": false,
+        "method": "dns_txt",
+        "well_known": "not_checked",
+        "dns_value": "v=abiz1;k=us-or-123456;h=records.example.org/harbour;p=VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [
+          "_abiz.harbourbikes.example.org"
+        ],
+        "fetches": [
+          "https://records.example.org/harbour?format=json"
+        ]
+      }
+    },
+    {
+      "name": "invalid domain input",
+      "input": {
+        "domain": "https://harbourbikes.example.org/"
+      },
+      "dns": {},
+      "http": {},
+      "expect": {
+        "status": "invalid_input",
+        "code": "invalid_domain",
+        "retryable": false,
+        "domain": "https://harbourbikes.example.org/",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [],
+        "fetches": []
+      }
+    },
+    {
+      "name": "IP literal input",
+      "input": {
+        "domain": "192.0.2.10"
+      },
+      "dns": {},
+      "http": {},
+      "expect": {
+        "status": "invalid_input",
+        "code": "invalid_domain",
+        "retryable": false,
+        "domain": "192.0.2.10",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [],
+        "fetches": []
+      }
+    },
+    {
+      "name": "special-use domain input",
+      "input": {
+        "domain": "printer.local"
+      },
+      "dns": {},
+      "http": {},
+      "expect": {
+        "status": "invalid_input",
+        "code": "non_public_domain",
+        "retryable": false,
+        "domain": "printer.local",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [],
+        "fetches": []
+      }
+    },
+    {
+      "name": "no input",
+      "input": {},
+      "dns": {},
+      "http": {},
+      "expect": {
+        "status": "invalid_input",
+        "code": "missing_input",
+        "retryable": false,
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [],
+        "fetches": []
+      }
+    },
+    {
+      "name": "both inputs",
+      "input": {
+        "domain": "harbourbikes.example.org",
+        "website": "https://harbourbikes.example.org"
+      },
+      "dns": {},
+      "http": {},
+      "expect": {
+        "status": "invalid_input",
+        "code": "both_inputs",
+        "retryable": false,
+        "domain": "harbourbikes.example.org",
+        "warnings": [],
+        "record_returned": false,
+        "dns_queries": [],
+        "fetches": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,312 @@
+{
+  "format": 1,
+  "description": "identity: an h= value or identity_host, canonical form or null (SPEC §3.2). inputs: what a resolver accepts as the domain to query (resolver specification §4 step 1); www is never replaced by the apex.",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "identity": [
+    {
+      "value": "record.example.org",
+      "canonical": "record.example.org"
+    },
+    {
+      "value": "Record.Example.ORG/Path",
+      "canonical": "record.example.org/Path"
+    },
+    {
+      "value": "record.example.org.",
+      "canonical": "record.example.org"
+    },
+    {
+      "value": "record.example.org/a/b",
+      "canonical": "record.example.org/a/b"
+    },
+    {
+      "value": "record.example.org/a/../b",
+      "canonical": null
+    },
+    {
+      "value": "record.example.org/./b",
+      "canonical": null
+    },
+    {
+      "value": "https://record.example.org",
+      "canonical": null
+    },
+    {
+      "value": "record.example.org:443",
+      "canonical": null
+    },
+    {
+      "value": "record.example.org?x",
+      "canonical": null
+    },
+    {
+      "value": "record.example.org#x",
+      "canonical": null
+    },
+    {
+      "value": "user@record.example.org",
+      "canonical": null
+    },
+    {
+      "value": "record example.org",
+      "canonical": null
+    },
+    {
+      "value": "192.0.2.1",
+      "canonical": null
+    },
+    {
+      "value": "localhost",
+      "canonical": null
+    },
+    {
+      "value": "a..b.example.org",
+      "canonical": null
+    },
+    {
+      "value": "-a.example.org",
+      "canonical": null
+    },
+    {
+      "value": "a-.example.org",
+      "canonical": null
+    },
+    {
+      "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.example.org",
+      "canonical": null
+    },
+    {
+      "value": "xn--bcher-kva.example",
+      "canonical": "xn--bcher-kva.example"
+    },
+    {
+      "value": "record.example.org/%20",
+      "canonical": "record.example.org/%20"
+    }
+  ],
+  "inputs": [
+    {
+      "input": {
+        "domain": "example.com"
+      },
+      "ok": true,
+      "domain": "example.com"
+    },
+    {
+      "input": {
+        "domain": "Example.COM."
+      },
+      "ok": true,
+      "domain": "example.com"
+    },
+    {
+      "input": {
+        "domain": "  example.com "
+      },
+      "ok": true,
+      "domain": "example.com"
+    },
+    {
+      "input": {
+        "domain": "www.example.com"
+      },
+      "ok": true,
+      "domain": "www.example.com"
+    },
+    {
+      "input": {
+        "domain": "bücher.de"
+      },
+      "ok": true,
+      "domain": "xn--bcher-kva.de"
+    },
+    {
+      "input": {
+        "domain": "https://example.com"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "example.com/path"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "example.com:443"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "user@example.com"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "192.0.2.1"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "localhost"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": "printer.local"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "svc.internal"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "shop.example"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "host.test"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "x.onion"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "router.lan"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "a.b.home"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "domain": "1.2.3.999"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "domain": ""
+      },
+      "ok": false,
+      "code": "missing_input"
+    },
+    {
+      "input": {
+        "domain": "a..b.com"
+      },
+      "ok": false,
+      "code": "invalid_domain"
+    },
+    {
+      "input": {
+        "website": "https://www.example.com/about?x=1"
+      },
+      "ok": true,
+      "domain": "www.example.com"
+    },
+    {
+      "input": {
+        "website": "example.com"
+      },
+      "ok": true,
+      "domain": "example.com"
+    },
+    {
+      "input": {
+        "website": "http://example.com"
+      },
+      "ok": true,
+      "domain": "example.com"
+    },
+    {
+      "input": {
+        "website": "ftp://example.com"
+      },
+      "ok": false,
+      "code": "invalid_website"
+    },
+    {
+      "input": {
+        "website": "https://user:pw@example.com"
+      },
+      "ok": false,
+      "code": "invalid_website"
+    },
+    {
+      "input": {
+        "website": "https://[2001:db8::1]/"
+      },
+      "ok": false,
+      "code": "invalid_website"
+    },
+    {
+      "input": {
+        "website": "https://192.0.2.1/"
+      },
+      "ok": false,
+      "code": "invalid_website"
+    },
+    {
+      "input": {
+        "website": "https://shop.example/"
+      },
+      "ok": false,
+      "code": "non_public_domain"
+    },
+    {
+      "input": {
+        "website": "not a url"
+      },
+      "ok": false,
+      "code": "invalid_website"
+    },
+    {
+      "input": {},
+      "ok": false,
+      "code": "missing_input"
+    },
+    {
+      "input": {
+        "domain": "example.com",
+        "website": "https://example.com"
+      },
+      "ok": false,
+      "code": "both_inputs"
+    }
+  ]
+}

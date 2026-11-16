@@ -1,0 +1,45 @@
+{
+  "format": 1,
+  "description": "Record signatures (SPEC §4.6): Ed25519 over the UTF-8 JCS form of the record with its top-level signature member removed.",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "test_keys": [
+    {
+      "name": "test key 1",
+      "seed_hex": "edcb87f24a87794d432f17cd60a9a864609ff2592a03108dd2c95c0e28eabc78",
+      "public_key": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "note": "Public seed. Signs test vectors only."
+    },
+    {
+      "name": "test key 2",
+      "seed_hex": "256446d242a9378c5a36942f537d0e2e447544b2d4b022454a39e15b7ebd3282",
+      "public_key": "kjRcW9aoFAyVDqzh4KWIP0MZLV1NmU3EwSmk+Ix3zQg=",
+      "note": "Public seed. Signs test vectors only."
+    }
+  ],
+  "cases": [
+    {
+      "name": "spec example registered-us",
+      "record_text": "{\n  \"record_version\": \"abiz1\",\n  \"business_name\": \"Harbour Bike Repair LLC\",\n  \"country\": {\n    \"code\": \"US\",\n    \"name\": \"United States\"\n  },\n  \"business_key\": \"us-or-123456\",\n  \"registration_number\": \"123456\",\n  \"identity_host\": \"harbour-bike-repair.or.us.to.co\",\n  \"domains\": [\n    \"harbourbikes.example\"\n  ],\n  \"public_key\": \"oQ0t/PFgN9pH0QSNUHrY5FLj5igISyzD1z6AXr5NtZo=\",\n  \"description\": \"Bicycle repair and maintenance in Portland.\",\n  \"website\": \"https://harbourbikes.example\",\n  \"services\": [\n    {\n      \"name\": \"Bicycle servicing\"\n    },\n    {\n      \"name\": \"Wheel repairs\"\n    }\n  ],\n  \"locations\": [\n    {\n      \"kind\": \"trading\",\n      \"address\": {\n        \"locality\": \"Portland\",\n        \"region\": {\n          \"code\": \"US-OR\",\n          \"name\": \"Oregon\"\n        },\n        \"country\": {\n          \"code\": \"US\"\n        }\n      },\n      \"opening_hours\": {\n        \"time_zone\": \"America/Los_Angeles\",\n        \"weekly\": [\n          {\n            \"day\": \"monday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"tuesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"wednesday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"thursday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"friday\",\n            \"periods\": [\n              {\n                \"opens\": \"09:00\",\n                \"closes\": \"17:00\"\n              }\n            ]\n          },\n          {\n            \"day\": \"saturday\",\n            \"periods\": []\n          },\n          {\n            \"day\": \"sunday\",\n            \"periods\": []\n          }\n        ]\n      },\n      \"public\": true\n    }\n  ],\n  \"last_updated\": \"2026-11-03T09:00:00Z\",\n  \"region\": {\n    \"code\": \"US-OR\",\n    \"name\": \"Oregon\"\n  },\n  \"signature\": \"uOes11KfqTG67o+wMRuA05f3JYOaHjyT4OG7EE0w5vhPN3na1N14cEDpzddPszaDCgqO02idxAzrn78csltVCA==\"\n}\n",
+      "signing_input": "{\"business_key\":\"us-or-123456\",\"business_name\":\"Harbour Bike Repair LLC\",\"country\":{\"code\":\"US\",\"name\":\"United States\"},\"description\":\"Bicycle repair and maintenance in Portland.\",\"domains\":[\"harbourbikes.example\"],\"identity_host\":\"harbour-bike-repair.or.us.to.co\",\"last_updated\":\"2026-11-03T09:00:00Z\",\"locations\":[{\"address\":{\"country\":{\"code\":\"US\"},\"locality\":\"Portland\",\"region\":{\"code\":\"US-OR\",\"name\":\"Oregon\"}},\"kind\":\"trading\",\"opening_hours\":{\"time_zone\":\"America/Los_Angeles\",\"weekly\":[{\"day\":\"monday\",\"periods\":[{\"closes\":\"17:00\",\"opens\":\"09:00\"}]},{\"day\":\"tuesday\",\"periods\":[{\"closes\":\"17:00\",\"opens\":\"09:00\"}]},{\"day\":\"wednesday\",\"periods\":[{\"closes\":\"17:00\",\"opens\":\"09:00\"}]},{\"day\":\"thursday\",\"periods\":[{\"closes\":\"17:00\",\"opens\":\"09:00\"}]},{\"day\":\"friday\",\"periods\":[{\"closes\":\"17:00\",\"opens\":\"09:00\"}]},{\"day\":\"saturday\",\"periods\":[]},{\"day\":\"sunday\",\"periods\":[]}]},\"public\":true}],\"public_key\":\"oQ0t/PFgN9pH0QSNUHrY5FLj5igISyzD1z6AXr5NtZo=\",\"record_version\":\"abiz1\",\"region\":{\"code\":\"US-OR\",\"name\":\"Oregon\"},\"registration_number\":\"123456\",\"services\":[{\"name\":\"Bicycle servicing\"},{\"name\":\"Wheel repairs\"}],\"website\":\"https://harbourbikes.example\"}",
+      "verifies": true
+    },
+    {
+      "name": "test key 1 sample",
+      "record_text": "{\"record_version\":\"abiz1\",\"note\":\"not a record; a signing test\",\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"signature\":\"TXuRcdJwW9OFJLA7KQofCvegQLgTbkD5xKPjF1lZF4USTTCzmqMQCOd8U4gf51WYhVulemOwnWQUT/jmsWiPAA==\"}",
+      "signing_input": "{\"note\":\"not a record; a signing test\",\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"record_version\":\"abiz1\"}",
+      "verifies": true
+    },
+    {
+      "name": "nested signature is signed",
+      "record_text": "{\"record_version\":\"abiz1\",\"ext\":{\"signature\":\"kept\"},\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"signature\":\"fjiIoVJNcVcPJAYMl0p2EUHShkVIQCYdptRICz/Eb38271LM5mgKwkyFBVUTCC4MNszdug7JmTkpAwlUNXdaAQ==\"}",
+      "signing_input": "{\"ext\":{\"signature\":\"kept\"},\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"record_version\":\"abiz1\"}",
+      "verifies": true
+    },
+    {
+      "name": "tampered sample",
+      "record_text": "{\"record_version\":\"abiz1\",\"note\":\"changed\",\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"signature\":\"TXuRcdJwW9OFJLA7KQofCvegQLgTbkD5xKPjF1lZF4USTTCzmqMQCOd8U4gf51WYhVulemOwnWQUT/jmsWiPAA==\"}",
+      "signing_input": "{\"note\":\"changed\",\"public_key\":\"VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=\",\"record_version\":\"abiz1\"}",
+      "verifies": false
+    }
+  ]
+}

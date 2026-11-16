@@ -1,0 +1,59 @@
+{
+  "format": 1,
+  "description": "The p tag and record public_key: 44 characters of canonical standard base64 decoding to 32 bytes.",
+  "generated_from": "the ABIZ reference resolver (resolve.abizrecord.org), abiz-agentic-business-record examples",
+  "cases": [
+    {
+      "value": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "ok": true
+    },
+    {
+      "value": "kjRcW9aoFAyVDqzh4KWIP0MZLV1NmU3EwSmk+Ix3zQg=",
+      "ok": true
+    },
+    {
+      "value": "5564186961a11f981c0308ffede7ba0271ec2f5c73365af841d49c202a888237",
+      "ok": false
+    },
+    {
+      "value": "VWQYaWGhH5gcAwj_7ee6AnHsL1xzNlr4QdScICqIgjc=",
+      "ok": false
+    },
+    {
+      "value": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc",
+      "ok": false
+    },
+    {
+      "value": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgj==",
+      "ok": false
+    },
+    {
+      "value": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjB=",
+      "ok": false
+    },
+    {
+      "value": "",
+      "ok": false
+    },
+    {
+      "value": "AAAA",
+      "ok": false
+    },
+    {
+      "value": "VWQYaWGhH5gcAwj/7ee6AnHsL1xzNlr4QdScICqIgjc= ",
+      "ok": false
+    },
+    {
+      "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=",
+      "ok": true
+    },
+    {
+      "value": "//////////////////////////////////////////w=",
+      "ok": true
+    },
+    {
+      "value": "//////////////////////////////////////////x=",
+      "ok": false
+    }
+  ]
+}

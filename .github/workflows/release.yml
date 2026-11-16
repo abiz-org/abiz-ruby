@@ -1,0 +1,48 @@
+# Publishes the abiz and jekyll-abiz gems to RubyGems when a v* tag is pushed, through RubyGems
+# trusted publishing (OIDC): repository abiz-org/abiz-ruby, workflow release.yml, environment
+# rubygems. Each gem needs its own trusted (or pending) publisher with these values. abiz is
+# pushed first because jekyll-abiz depends on it.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: rubygems
+      url: https://rubygems.org/gems/abiz
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+      - name: Tag matches both gem versions
+        run: |
+          abiz=$(ruby -e 'require "./abiz/lib/abiz/version"; print Abiz::VERSION')
+          jekyll=$(ruby -e 'module Jekyll; end; require "./jekyll-abiz/lib/jekyll/abiz/version"; print Jekyll::Abiz::VERSION')
+          test "v$abiz" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME does not match abiz $abiz"; exit 1; }
+          test "v$jekyll" = "$GITHUB_REF_NAME" || { echo "tag $GITHUB_REF_NAME does not match jekyll-abiz $jekyll"; exit 1; }
+      - name: Test and build abiz
+        working-directory: abiz
+        run: bundle install && bundle exec rake test && gem build abiz.gemspec
+      - name: Test and build jekyll-abiz
+        working-directory: jekyll-abiz
+        run: bundle install && bundle exec rake test && gem build jekyll-abiz.gemspec
+      - uses: rubygems/configure-rubygems-credentials@dc5a8d8553e6ee01fc26761a49e99e733d17954a # v2.1.0
+      - name: Push abiz
+        working-directory: abiz
+        run: gem push "abiz-${GITHUB_REF_NAME#v}.gem"
+      - name: Push jekyll-abiz
+        working-directory: jekyll-abiz
+        run: gem push "jekyll-abiz-${GITHUB_REF_NAME#v}.gem"

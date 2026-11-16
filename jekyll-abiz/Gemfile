@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gemspec
+
+# The abiz gem from this repository until it is published.
+gem "abiz", path: "../abiz"
+
+group :development, :test do
+  gem "jekyll", "= 4.4.1"
+  # Held back to releases at least two weeks old (16 Nov 2026).
+  gem "kramdown", "= 2.5.2"
+  gem "sass-embedded", "= 1.106.1"
+  gem "minitest", "= 5.26.0"
+  gem "rake", "= 13.3.1"
+end
